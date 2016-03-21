@@ -5,3 +5,9 @@ build
 dist
 pycuber.egg-info
 venv
+
+.hypothesis
+.idea
+.cache
+
+.ipynb_checkpoints/Pycuber_test_notebook-checkpoint.ipynb
