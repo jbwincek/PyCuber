@@ -5,7 +5,14 @@ from itertools import permutations
 
 
 class Square(object):
-    """Square(colour), implements a square (sticker) on a cube."""
+    """Square represents a single colored sticker on a cube
+
+    Args:
+        colour: the color of the sticker
+        parent:
+        children:
+
+    """
 
     def __init__(self, colour, parent=None, children=[]):
         super(Square, self).__init__()
@@ -37,16 +44,20 @@ class Square(object):
                }[self.colour] + "  \x1b[49m"
 
     def __eq__(self, another):
-        """
-        Check if the colour is as same as another.
+        """Return True if this square's color is the same as another, otherwise False.
+
+        Args:
+            another: the other square to be compared to
         """
         if isinstance(another, Square):
             return self.colour == another.colour
         return False
 
     def __ne__(self, another):
-        """
-        Check if the colours are different.
+        """Return True if this square's color is different from another, otherwise False.
+
+        Args:
+            another: the other square to be compared to
         """
         return not self.__eq__(another)
 
@@ -75,7 +86,20 @@ class Square(object):
 class Cubie(object):
     """
     Cubie(**kwargs), implements a cubie on the Cube.
-    ex: Cubie(U=Square("yellow"), F=Square("green"), L=Square("red"))
+
+    Args:
+        parent:
+        children:
+        kwargs: takes a dict of facings, keys for the facings must be either L, U, F, D,
+            R or B. Facings represent which way the individual squares on the cubie are oriented.
+
+    Examples:
+        Cubie(U=Square('yellow'), F=Square('green'), L=Square('red'))
+
+    Notes:
+        A 'cubie' is one of the pieces of the cube, corner cubies have three stickers, edge cubies
+        have two stickers and center cubies have one sticker.
+
     """
 
     def __init__(self, parent=None, children=[], **kwargs):
@@ -331,7 +355,8 @@ class Cube(object):
 
     def __getattr__(self, name):
         """
-        Returns the face from Cube.get_face() if the name is L U F D R or B.
+        Returns:
+            the face from Cube.get_face() if the name is L U F D R or B.
         """
         if name in list("LUFDRB"):
             return self.get_face(name)
@@ -365,7 +390,7 @@ class Cube(object):
 
     def __ne__(self, another):
         """
-        Check if two Cubes aren't the same.
+        Check if two Cubes are different.
         """
         return not self.__eq__(another)
 
@@ -380,7 +405,7 @@ class Cube(object):
 
     def has_colour(self, colour):
         """
-        Find all Cubies which has a specific colour(s).
+        Find all Cubies which have a specific colour(s).
         """
         return set(
             child for child in self.children
@@ -392,7 +417,13 @@ class Cube(object):
 
     def select_type(self, tp):
         """
-        Find all Cubies which has the specific type.
+        Find all Cubies which have the specified type.
+
+        Args:
+            The type of the cubie, either Centre, Edge or Corner
+
+        Returns:
+            A set of Cubies that match the type given
         """
         return set(
             child for child in self.children
@@ -400,10 +431,14 @@ class Cube(object):
         )
 
     def get_face(self, face):
+        """Get a specific face on a Cube.
+        Args:
+            face: a face descriptor as a string, can be any of the following: "L", "U", "F", "D", "R",
+                "B", "left", "up", "front", "down", "right", "back"
+        Returns:
+             a 2D list of all the cubies on that face.
         """
-        Getting specific face on a Cube.
-        Returns as a 2D list.
-        """
+        #TODO verify this docstring
         if face not in [
             "L", "U", "F", "D", "R", "B",
             "left", "up", "front", "down", "right", "back"

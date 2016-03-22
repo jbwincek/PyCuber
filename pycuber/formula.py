@@ -1,6 +1,6 @@
 """
 
-This module is to implement the Rubik's Cube formulae.
+This module implements Rubik's Cube formulae.
 You can deal with Rubik's Cube formulae easily with Step and Formula.
 
 Usage:
